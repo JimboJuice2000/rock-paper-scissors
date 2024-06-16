@@ -1,67 +1,71 @@
-let humanScore = 0;
-let compScore = 0;
-console.log("hello");
+const pImgsDiv = document.querySelector(".playerImgs");
+const playerChoiceElement = document.querySelector(".playerChoice");
+const computerChoiceElement = document.querySelector(".computerChoice");
+const winnerElement = document.querySelector(".winner");
+const playerScoreElement = document.querySelector(".playerScore");
+const computerScoreElement = document.querySelector(".computerScore");
+const tiesElement = document.querySelector(".ties");
 
-function getCompChoice() {
-    let n = Math.floor(Math.random() * 3);
-    let choice = "default";
+let playerScore = 0;
+let computerScore = 0;
+let ties = 0;
 
-    switch (n) {
-        case 0:
-            choice = "rock";
-            break;
-        case 1:
-            choice = "paper";
-            break;
-        case 2:
-            choice = "scissors";
-            break;
-    }
-    return choice;
-}
+pImgsDiv.addEventListener("click", event => {
+    const target = event.target;
+    if (target.classList.contains("pImg")) {
+        const playerChoice = target.id;
+        const computerChoice = getComputerChoice();
+        const winner = determineWinner(playerChoice, computerChoice);
 
-function getHumanChoice() {
-    let humanChoice = prompt("Enter Rock, Paper or Scissors | "+ `Current score: ${humanScore}-${compScore}`);
+        playerChoiceElement.textContent = `Player Choice: ${playerChoice}`;
+        computerChoiceElement.textContent = `Computer Choice: ${computerChoice}`;
 
-    humanChoice = humanChoice.toLowerCase();
-
-    if (humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors") {
-        return humanChoice;
-    } else {
-        alert("Please select a valid option");
-        return getHumanChoice();
-    }
-}
-
-function playGame() {
-    function playRound(humanChoice, compChoice) {
-        if (humanChoice === compChoice) {
-            return "It's a tie!";
-        } else if (
-            (humanChoice === "rock" && compChoice === "scissors") ||
-            (humanChoice === "paper" && compChoice === "rock") ||
-            (humanChoice === "scissors" && compChoice === "paper")
-        ) {
-            humanScore++;
-            return "You win this round!";
+        if (winner === "player") {
+            playerScore++;
+            winnerElement.textContent = "Player Wins!";
+        } else if (winner === "computer") {
+            computerScore++;
+            winnerElement.textContent = "Computer Wins!";
         } else {
-            compScore++;
-            return "Computer wins this round!";
+            ties++;
+            winnerElement.textContent = "It's a Tie!";
         }
+
+        playerScoreElement.textContent = `Score: ${playerScore}`;
+        computerScoreElement.textContent = `Score: ${computerScore}`;
+        tiesElement.textContent = `Ties: ${ties}`;
     }
+});
 
-    for (let i = 0; i < 5; i++) {
-        let compChoice = getCompChoice();
-        let humanChoice = getHumanChoice();
-        
-        console.log("Computer choice:", compChoice);
-        console.log("Your choice:", humanChoice);
-        console.log(playRound(humanChoice, compChoice));
-        console.log(`Scores -> Human: ${humanScore}, Computer: ${compScore}`);
-
-    }
-
-    console.log(`Final Scores -> Human: ${humanScore}, Computer: ${compScore}`);
+function getComputerChoice() {
+    const choices = ["rock", "paper", "scissors"];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
 }
 
-playGame();
+function determineWinner(playerChoice, computerChoice) {
+    if (playerChoice === computerChoice) {
+        return "tie";
+    }
+    if ((playerChoice === "rock" && computerChoice === "scissors") ||
+        (playerChoice === "paper" && computerChoice === "rock") ||
+        (playerChoice === "scissors" && computerChoice === "paper")) {
+        return "player";
+    } else {
+        return "computer";
+    }
+}
+
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    ties = 0;
+    playerChoiceElement.textContent = "Player Choice: ";
+    computerChoiceElement.textContent = "Computer Choice: ";
+    winnerElement.textContent = "";
+    playerScoreElement.textContent = `Score: ${playerScore}`;
+    computerScoreElement.textContent = `Score: ${computerScore}`;
+    tiesElement.textContent = `Ties: ${ties}`;
+}
+
+

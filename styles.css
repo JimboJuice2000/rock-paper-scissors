@@ -1,0 +1,41 @@
+/* * {
+    font-family: Arial;
+}
+
+.reset {
+    display:none;
+} */
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.score, .winnerDiv, .playerSection, .computerSection {
+    margin: 20px auto;
+}
+
+.pImg {
+    cursor: pointer;
+    width: 100px;
+    margin: 10px;
+    transition: transform 0.2s;
+}
+
+.pImg:hover {
+    transform: scale(1.1);
+}
+
+.winner {
+    color: green;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.reset {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
