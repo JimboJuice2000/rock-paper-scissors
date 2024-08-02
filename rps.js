@@ -67,5 +67,3 @@ function resetGame() {
     computerScoreElement.textContent = `Score: ${computerScore}`;
     tiesElement.textContent = `Ties: ${ties}`;
 }
-
-
